@@ -96,6 +96,8 @@ ppFuncSig parv (Function f tyvars args res_ty body) content =
 
 ppFormula :: (Ord a, PrettyVar a) => Formula a -> Doc
 ppFormula (Formula Prove _ tvs term)  = apply "assert-not" (par' tvs (ppExpr term))
+ppFormula (Formula Assert (Definition _) tvs term) =
+  apply "assert" (parExpr "!" [par' tvs (ppExpr term), ":function-definition"])
 ppFormula (Formula Assert _ tvs term) = apply "assert"     (par' tvs (ppExpr term))
 
 ppExpr :: (Ord a, PrettyVar a) => Expr a -> Doc
